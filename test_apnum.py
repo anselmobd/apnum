@@ -26,7 +26,7 @@ def test_apnum_init():
         ("-1e9i0e0", Decimal("-1000000000")),
         ("1e9i0e0", "1000000000"),
         ("-1e9i0e0", "-1000000000"),
-        ("123e-2i234e-1q", Num(1.23, 23.4)),
+        ("123e-2i234e-1", Num(1.23, 23.4)),
     ]
     for value, param in assert_values:
         print(value, type(param), param)
@@ -42,7 +42,28 @@ def test_apnum_init():
 
 def test_apnum_tuple():
     n1 = Num(1.23, 23.4)
+    print(n1)
     t1 = n1.as_tuple()
+    print(t1)
     n2 = Num().from_tuple(t1)
+    print(n2)
     t2 = n2.as_tuple()
+    print(t2)
     assert t1 == t2
+
+
+def test_apnum_add():
+    n1 = Num(1.23, 23.4)
+    n2 = Num(23.4, 1.23)
+    print(n1)
+    print(n2)
+    n1 += n2
+    print(n1)
+    assert "2463e-2i2463e-2" == str(n1)
+    n1 = Num(1.23, 23.4)
+    n2 = Num(23.4, 1.23)
+    print(n1)
+    print(n2)
+    n2 += n1
+    print(n2)
+    assert "2463e-2i2463e-2" == str(n2)
