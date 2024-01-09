@@ -36,3 +36,11 @@ def test_apnum_init():
 
     # valid "i" component
     assert "-123e3i-123456789e-7" == str(Num(-123000, -12.3456789))
+
+
+def test_apnum_tuple():
+    n1 = Num(1.23, 23.4)
+    t1 = n1.as_tuple()
+    n2 = Num().from_tuple(t1)
+    t2 = n2.as_tuple()
+    assert t1 == t2

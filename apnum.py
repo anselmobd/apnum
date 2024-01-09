@@ -1,10 +1,11 @@
 import math
 from decimal import Decimal
+from pprint import pprint
 
 
 class Num:
 
-    def __init__(self, real_value, img_value=None) -> None:
+    def __init__(self, real_value=0, img_value=None) -> None:
         self.real_significand, self.real_exponent = self.value_to_signif_exp(real_value)
         self.img_significand, self.img_exponent = self.value_to_signif_exp(img_value)
 
@@ -49,28 +50,35 @@ class Num:
 
         return significand, exponent
 
+    def as_tuple(self):
+        return (
+            self.real_significand,
+            self.real_exponent,
+            self.img_significand,
+            self.img_exponent,
+        )
+
+    def from_tuple(self, tuple_):
+        (
+            real_significand,
+            real_exponent,
+            img_significand,
+            img_exponent,
+        ) = tuple_
+        self.real_significand = real_significand
+        self.real_exponent = real_exponent
+        self.img_significand = img_significand
+        self.img_exponent = img_exponent
+        return self
+       
     def __str__(self) -> str:
         return f"{self.real_significand}e{self.real_exponent}i{self.img_significand}e{self.img_exponent}"
 
 
 if __name__ == '__main__':  # pragma: no cover
-    print(Num(123))
-    print(Num(123000))
-    print(Num(-123))
-    print(Num(-123000))
-    print(Num(12.3))
-    print(Num(12.3456789))
-    print(Num(0.00123))
-    print(Num(12300.))
-    print(Num(-12.3))
-    print(Num(-12.3456789))
-    print(Num(-0.00123))
-    print(Num(-12300.))
-    print(Num(1.23e50))
-    print(Num(-1.23e50))
-    # print(Num(-1.23e500))
-    print(Num(Decimal("1000000000.001")))
-    print(Num(Decimal("-1000000000.001")))
-    print(Num(Decimal("1000000000")))
-    print(Num(Decimal("-1000000000")))
-    print(Num("-1000000000"))
+    n = Num(1.23, 23.4)
+    print(n)
+    t = n.as_tuple()
+    pprint(t)
+    m = Num().from_tuple(t)
+    print(m)
