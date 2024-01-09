@@ -46,7 +46,7 @@ class Num:
         return f"{self.significand}e{self.exponent}i{self.i_significand}e{self.i_exponent}"
 
 
-if __name__ == '__main__':
+if __name__ == '__main__':  # pragma: no cover
     print(Num(123))
     print(Num(123000))
     print(Num(-123))
