@@ -6,8 +6,11 @@ from pprint import pprint
 class Num:
 
     def __init__(self, real_value=0, img_value=None) -> None:
-        self.real_significand, self.real_exponent = self.value_to_signif_exp(real_value)
-        self.img_significand, self.img_exponent = self.value_to_signif_exp(img_value)
+        if isinstance(real_value, Num):
+            self.from_tuple(real_value.as_tuple())
+        else:
+            self.real_significand, self.real_exponent = self.value_to_signif_exp(real_value)
+            self.img_significand, self.img_exponent = self.value_to_signif_exp(img_value)
 
     def value_to_signif_exp(self, value):
         significand = 0
@@ -76,9 +79,4 @@ class Num:
 
 
 if __name__ == '__main__':  # pragma: no cover
-    n = Num(1.23, 23.4)
-    print(n)
-    t = n.as_tuple()
-    pprint(t)
-    m = Num().from_tuple(t)
-    print(m)
+    print(Num(Num(1.23, 23.4)))
