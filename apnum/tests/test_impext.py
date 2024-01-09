@@ -1,5 +1,5 @@
 import pytest
-from intexp import IntExp
+from apnum import IntExp
 from decimal import Decimal
 
 

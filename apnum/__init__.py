@@ -1,5 +1,5 @@
-from intexp import IntExp
-from num import Num
+from .intexp import IntExp
+from .num import Num
 
 
 if __name__ == '__main__':  # pragma: no cover

@@ -73,11 +73,3 @@ class IntExp:
         self.equalizes_exponents(other)
         self.significand += other.significand
         return self
-
-
-if __name__ == '__main__':  # pragma: no cover
-    print(IntExp(123))
-    print(IntExp(123, 2))
-    print(IntExp(-123, -2))
-    print(IntExp(1.23, 4))
-    print(IntExp(1.23, 1))
