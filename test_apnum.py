@@ -26,8 +26,10 @@ def test_apnum_init():
         ("-1e9i0e0", Decimal("-1000000000")),
         ("1e9i0e0", "1000000000"),
         ("-1e9i0e0", "-1000000000"),
+        ("123e-2i234e-1q", Num(1.23, 23.4)),
     ]
     for value, param in assert_values:
+        print(value, type(param), param)
         assert value == str(Num(param))
 
     # invalid float
