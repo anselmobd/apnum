@@ -1,3 +1,4 @@
+import pytest
 from apnum import Num
 from decimal import Decimal
 
@@ -28,4 +29,6 @@ def test_apnum_init():
     for value, param in assert_values:
         assert value == str(Num(param))
 
+    with pytest.raises(ValueError):
+        Num(-1.23e500)
 
