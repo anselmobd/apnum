@@ -77,6 +77,43 @@ class Num:
     def __str__(self) -> str:
         return f"{self.real_significand}e{self.real_exponent}i{self.img_significand}e{self.img_exponent}"
 
+    def dec_real_exponent(self, dec):
+        self.real_significand *= 10 ** dec
+        self.real_exponent -= dec
+
+    def equalizes_real_exponents(self, other):
+        if self.real_exponent != other.real_exponent:
+            if self.real_exponent > other.real_exponent:
+                dec = self.real_exponent - other.real_exponent
+                self.dec_real_exponent(dec)
+            else:
+                dec = other.real_exponent - self.real_exponent
+                other.dec_real_exponent(dec)
+
+    def dec_img_exponent(self, dec):
+        self.img_significand *= 10 ** dec
+        self.img_exponent -= dec
+
+    def equalizes_img_exponents(self, other):
+        if self.img_exponent != other.img_exponent:
+            if self.img_exponent > other.img_exponent:
+                dec = self.img_exponent - other.img_exponent
+                self.dec_img_exponent(dec)
+            else:
+                dec = other.img_exponent - self.img_exponent
+                other.dec_img_exponent(dec)
+
+    def __add__(self, other):
+        self.equalizes_real_exponents(other)
+        self.real_significand += other.real_significand
+        self.equalizes_img_exponents(other)
+        self.img_significand += other.img_significand
+        return self
+
 
 if __name__ == '__main__':  # pragma: no cover
-    print(Num(Num(1.23, 23.4)))
+    n1 = Num(1.23, 23.4)
+    n2 = Num(23.4, 1.23)
+    print(n1)
+    print(n2)
+    print(n1 + n2)
