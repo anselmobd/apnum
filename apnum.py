@@ -29,7 +29,10 @@ class Num:
                 self.exponent -= 1
             self.significand = int(''.join(num_int))
 
-        elif isinstance(value, Decimal):
+        elif isinstance(value, str):
+            value = Decimal(value)
+
+        if isinstance(value, Decimal):
             (sign, digits, self.exponent) = Decimal(value).as_tuple()
             self.significand = int("".join(map(str,digits)))
             if sign:
@@ -63,3 +66,4 @@ if __name__ == '__main__':
     print(Num(Decimal("-1000000000.001")))
     print(Num(Decimal("1000000000")))
     print(Num(Decimal("-1000000000")))
+    print(Num("-1000000000"))
