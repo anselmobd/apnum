@@ -1,4 +1,5 @@
 import math
+from decimal import Decimal
 
 
 class Num:
@@ -28,10 +29,16 @@ class Num:
                 self.exponent -= 1
             self.significand = int(''.join(num_int))
 
-        while self.significand % 10 == 0:
+        elif isinstance(value, Decimal):
+            (sign, digits, self.exponent) = Decimal(value).as_tuple()
+            # print(sign, digits, self.exponent)
+            self.significand = int("".join(map(str,digits)))
+            if sign:
+                self.significand *= -1
+
+        while self.significand and self.significand % 10 == 0:
             self.significand //= 10
             self.exponent += 1
-
 
     def __str__(self) -> str:
         return f"{self.significand}e{self.exponent}i{self.i_significand}e{self.i_exponent}"
@@ -50,4 +57,8 @@ if __name__ == '__main__':
     print(Num(-12300.))
     print(Num(1.23e50))
     print(Num(-1.23e50))
-    print(Num(-1.23e500))
+    # print(Num(-1.23e500))
+    print(Num(Decimal("1000000000.001")))
+    print(Num(Decimal("-1000000000.001")))
+    print(Num(Decimal("1000000000")))
+    print(Num(Decimal("-1000000000")))
