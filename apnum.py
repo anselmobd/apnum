@@ -17,7 +17,7 @@ class Num:
         elif isinstance(value, float):
             if math.isnan(value) or math.isinf(value):
                 raise ValueError
-            value_str = f"{value:e}"
+            value_str = f"{value:.15e}"
             num_str, exp_str = value_str.split("e")
             self.exponent = int(exp_str)
             num_str_int, num_str_frac = num_str.split(".")
@@ -31,7 +31,6 @@ class Num:
 
         elif isinstance(value, Decimal):
             (sign, digits, self.exponent) = Decimal(value).as_tuple()
-            # print(sign, digits, self.exponent)
             self.significand = int("".join(map(str,digits)))
             if sign:
                 self.significand *= -1
@@ -50,9 +49,11 @@ if __name__ == '__main__':
     print(Num(-123))
     print(Num(-123000))
     print(Num(12.3))
+    print(Num(12.3456789))
     print(Num(0.00123))
     print(Num(12300.))
     print(Num(-12.3))
+    print(Num(-12.3456789))
     print(Num(-0.00123))
     print(Num(-12300.))
     print(Num(1.23e50))
