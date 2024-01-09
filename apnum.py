@@ -4,16 +4,19 @@ from decimal import Decimal
 
 class Num:
 
-    def __init__(self, value, i_value=None) -> None:
-        self.significand, self.exponent = self.value2num_exp(value)
-        self.i_significand, self.i_exponent = self.value2num_exp(i_value)
+    def __init__(self, real_value, img_value=None) -> None:
+        self.real_significand, self.real_exponent = self.value_to_signif_exp(real_value)
+        self.img_significand, self.img_exponent = self.value_to_signif_exp(img_value)
 
-    def value2num_exp(self, value):
+    def value_to_signif_exp(self, value):
         significand = 0
         exponent = 0
 
         if not value:
             return significand, exponent
+
+        if isinstance(value, str):
+            value = Decimal(value)
 
         if isinstance(value, int):
             significand = value
@@ -23,21 +26,18 @@ class Num:
             if math.isnan(value) or math.isinf(value):
                 raise ValueError
             value_str = f"{value:.15e}"
-            num_str, exp_str = value_str.split("e")
+            signif_str, exp_str = value_str.split("e")
             exponent = int(exp_str)
-            num_str_int, num_str_frac = num_str.split(".")
-            num_int = list(num_str_int)
-            num_frac = list(num_str_frac.rstrip("0"))
-            while num_frac:
-                num_int.append(num_frac[0])
-                num_frac.pop(0)
+            signif_str_int, signif_str_frac = signif_str.split(".")
+            signif_int = list(signif_str_int)
+            signif_frac = list(signif_str_frac.rstrip("0"))
+            while signif_frac:
+                signif_int.append(signif_frac[0])
+                signif_frac.pop(0)
                 exponent -= 1
-            significand = int(''.join(num_int))
+            significand = int(''.join(signif_int))
 
-        elif isinstance(value, str):
-            value = Decimal(value)
-
-        if isinstance(value, Decimal):
+        elif isinstance(value, Decimal):
             (sign, digits, exponent) = Decimal(value).as_tuple()
             significand = int("".join(map(str,digits)))
             if sign:
@@ -50,7 +50,7 @@ class Num:
         return significand, exponent
 
     def __str__(self) -> str:
-        return f"{self.significand}e{self.exponent}i{self.i_significand}e{self.i_exponent}"
+        return f"{self.real_significand}e{self.real_exponent}i{self.img_significand}e{self.img_exponent}"
 
 
 if __name__ == '__main__':  # pragma: no cover
