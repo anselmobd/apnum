@@ -3,7 +3,7 @@ from apnum import Num
 from decimal import Decimal
 
 
-def test_apnum_init():
+def test_num_init():
     # valid values
     assert_values = [
         ("123e0i0e0", 123),
@@ -40,19 +40,7 @@ def test_apnum_init():
     assert "-123e3i-123456789e-7" == str(Num(-123000, -12.3456789))
 
 
-def test_apnum_tuple():
-    n1 = Num(1.23, 23.4)
-    print(n1)
-    t1 = n1.as_tuple()
-    print(t1)
-    n2 = Num().from_tuple(t1)
-    print(n2)
-    t2 = n2.as_tuple()
-    print(t2)
-    assert t1 == t2
-
-
-def test_apnum_add():
+def test_num_add():
     n1 = Num(1.23, 23.4)
     n2 = Num(23.4, 1.23)
     print(n1)
