@@ -5,42 +5,49 @@ from decimal import Decimal
 class Num:
 
     def __init__(self, value, i_value=None) -> None:
-        self.significand = 0
-        self.exponent = 0
-        self.i_significand = 0
-        self.i_exponent = 0
+        self.significand, self.exponent = self.value2num_exp(value)
+        self.i_significand, self.i_exponent = self.value2num_exp(i_value)
+
+    def value2num_exp(self, value):
+        significand = 0
+        exponent = 0
+
+        if not value:
+            return significand, exponent
 
         if isinstance(value, int):
-            self.significand = value
-            self.exponent = 0
+            significand = value
+            exponent = 0
 
         elif isinstance(value, float):
             if math.isnan(value) or math.isinf(value):
                 raise ValueError
             value_str = f"{value:.15e}"
             num_str, exp_str = value_str.split("e")
-            self.exponent = int(exp_str)
+            exponent = int(exp_str)
             num_str_int, num_str_frac = num_str.split(".")
             num_int = list(num_str_int)
             num_frac = list(num_str_frac.rstrip("0"))
             while num_frac:
                 num_int.append(num_frac[0])
                 num_frac.pop(0)
-                self.exponent -= 1
-            self.significand = int(''.join(num_int))
+                exponent -= 1
+            significand = int(''.join(num_int))
 
         elif isinstance(value, str):
             value = Decimal(value)
 
         if isinstance(value, Decimal):
-            (sign, digits, self.exponent) = Decimal(value).as_tuple()
-            self.significand = int("".join(map(str,digits)))
+            (sign, digits, exponent) = Decimal(value).as_tuple()
+            significand = int("".join(map(str,digits)))
             if sign:
-                self.significand *= -1
+                significand *= -1
 
-        while self.significand and self.significand % 10 == 0:
-            self.significand //= 10
-            self.exponent += 1
+        while significand and significand % 10 == 0:
+            significand //= 10
+            exponent += 1
+
+        return significand, exponent
 
     def __str__(self) -> str:
         return f"{self.significand}e{self.exponent}i{self.i_significand}e{self.i_exponent}"
