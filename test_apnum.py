@@ -4,6 +4,7 @@ from decimal import Decimal
 
 
 def test_apnum_init():
+    # valid values
     assert_values = [
         ("123e0i0e0", 123),
         ("123e3i0e0", 123000),
@@ -29,6 +30,9 @@ def test_apnum_init():
     for value, param in assert_values:
         assert value == str(Num(param))
 
+    # invalid float
     with pytest.raises(ValueError):
         Num(-1.23e500)
 
+    # valid "i" component
+    assert "-123e3i-123456789e-7" == str(Num(-123000, -12.3456789))
