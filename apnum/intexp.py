@@ -63,7 +63,7 @@ class IntExp:
         self.significand *= 10 ** dec
         self.exponent -= dec
 
-    def equalizes_exponents(self, other):
+    def equalize_exponents(self, other):
         dec = self.exponent - other.exponent
         if dec > 0:
             self.dec_exponent(dec)
@@ -71,21 +71,21 @@ class IntExp:
             other.dec_exponent(-dec)
 
     def __add__(self, other):
-        self.equalizes_exponents(other)
+        self.equalize_exponents(other)
         added = IntExp(
             self.significand + other.significand,
             self.exponent,
         )
         self.optimize()
-        added.optimize()
+        other.optimize()
         return added
 
     def __sub__(self, other):
-        self.equalizes_exponents(other)
+        self.equalize_exponents(other)
         subs = IntExp(
             self.significand - other.significand,
             self.exponent,
         )
         self.optimize()
-        subs.optimize()
+        other.optimize()
         return subs
