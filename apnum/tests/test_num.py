@@ -55,3 +55,20 @@ def test_num_add():
     n2 += n1
     print(n2)
     assert "2463e-2i2463e-2" == str(n2)
+
+
+def test_num_sub():
+    n1 = Num(1.23, 23.4)
+    n2 = Num(23.4, 1.23)
+    print(n1)
+    print(n2)
+    n1 -= n2
+    print(n1)
+    assert "-2217e-2i2217e-2" == str(n1)
+    n1 = Num(1.23, 23.4)
+    n2 = Num(23.4, 1.23)
+    print(n1)
+    print(n2)
+    n2 -= n1
+    print(n2)
+    assert "2217e-2i-2217e-2" == str(n2)

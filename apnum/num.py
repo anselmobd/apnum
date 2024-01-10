@@ -21,3 +21,9 @@ class Num:
             self.real + other.real,
             self.img + other.img
         )
+
+    def __sub__(self, other):
+        return Num(
+            self.real - other.real,
+            self.img - other.img
+        )

@@ -81,3 +81,13 @@ class IntExp:
         self.optimize()
         added.optimize()
         return added
+
+    def __sub__(self, other):
+        self.equalizes_exponents(other)
+        subs = IntExp(
+            self.significand - other.significand,
+            self.exponent,
+        )
+        self.optimize()
+        subs.optimize()
+        return subs

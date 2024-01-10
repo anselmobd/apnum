@@ -53,3 +53,20 @@ def test_apnum_add():
     n2 += n1
     print(n2)
     assert "2463e-2" == str(n2)
+
+
+def test_apnum_sub():
+    n1 = IntExp(1.23)
+    n2 = IntExp(23.4)
+    print(n1)
+    print(n2)
+    n1 -= n2
+    print(n1)
+    assert "-2217e-2" == str(n1)
+    n1 = IntExp(1.23)
+    n2 = IntExp(23.4)
+    print(n1)
+    print(n2)
+    n2 -= n1
+    print(n2)
+    assert "2217e-2" == str(n2)
