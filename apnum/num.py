@@ -1,7 +1,7 @@
 import math
 from decimal import Decimal
 from pprint import pprint
-from .intexp import IntExp
+from apnum.intexp import IntExp
 
 
 class Num:
@@ -16,9 +16,8 @@ class Num:
     def __str__(self) -> str:
         return f"{self.real.significand}e{self.real.exponent}i{self.img.significand}e{self.img.exponent}"
 
-
-if __name__ == '__main__':  # pragma: no cover
-    print(Num(123))
-    print(Num(123, 234))
-    print(Num(1.23, 23.4))
-    print(Num(123000, 2340))
+    def __add__(self, other):
+        return Num(
+            self.real + other.real,
+            self.img + other.img
+        )
