@@ -15,6 +15,7 @@ class IntExp:
             )
             if exp:
                 self.exponent += exp
+            self.optimize()
 
     def value_to_signif_exp(self, value):
         significand = 0
@@ -48,10 +49,12 @@ class IntExp:
             if sign:
                 significand *= -1
 
-        while significand and significand % 10 == 0:
-            significand //= 10
-            exponent += 1
         return significand, exponent
+
+    def optimize(self):
+        while self.significand and self.significand % 10 == 0:
+            self.significand //= 10
+            self.exponent += 1
 
     def __str__(self) -> str:
         return f"{self.significand}e{self.exponent}"
@@ -71,5 +74,10 @@ class IntExp:
 
     def __add__(self, other):
         self.equalizes_exponents(other)
-        self.significand += other.significand
-        return self
+        added = IntExp(
+            self.significand + other.significand,
+            self.exponent,
+        )
+        self.optimize()
+        added.optimize()
+        return added
