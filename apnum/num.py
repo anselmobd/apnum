@@ -14,7 +14,7 @@ class Num:
             self.img = IntExp(img_value)
 
     def __str__(self) -> str:
-        return f"{self.real.significand}e{self.real.exponent}i{self.img.significand}e{self.img.exponent}"
+        return f"{self.real}i{self.img}"
 
     def __add__(self, other):
         return Num(
