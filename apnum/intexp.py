@@ -64,13 +64,11 @@ class IntExp:
         self.exponent -= dec
 
     def equalizes_exponents(self, other):
-        if self.exponent != other.exponent:
-            if self.exponent > other.exponent:
-                dec = self.exponent - other.exponent
-                self.dec_exponent(dec)
-            else:
-                dec = other.exponent - self.exponent
-                other.dec_exponent(dec)
+        dec = self.exponent - other.exponent
+        if dec > 0:
+            self.dec_exponent(dec)
+        elif dec < 0:
+            other.dec_exponent(-dec)
 
     def __add__(self, other):
         self.equalizes_exponents(other)
